@@ -22,3 +22,6 @@ echo "$*" >> "${local_dir}/info.txt"
 
 /usr/bin/time --output=${LOG} --verbose \
 mumax3 koerner2022frequency/Fig4A_simulation_MumaxScript_perfectFilm.mx3
+
+mumax3-convert -numpy koerner2022frequency/Fig4A_simulation_MumaxScript_perfectFilm.out/*.ovf
+#mumax3-convert -png koerner2022frequency/Fig4A_simulation_MumaxScript_perfectFilm.out/*.ovf
