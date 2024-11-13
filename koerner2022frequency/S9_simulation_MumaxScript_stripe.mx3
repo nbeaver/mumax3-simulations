@@ -1,0 +1,95 @@
+f 		:= 191.4e6												// excitation freq				[Hz]
+bstat 	:= 0.5e-3												// static field					[T]
+amp 	:= 0.0007												// excitation amplitude 		[T_p]
+
+N := 256														// number of cells
+c := 100e-9														// cell width					[m]
+d := 20e-9														// cell height					[m]
+setgridsize(N, N, 1)	
+setcellsize(c, c, d)
+setpbc(50,0,0)
+
+// define grains with region number 0-254
+grainSize  := 1e-6											// grain size 					[m]
+randomSeed := 2345678
+maxRegion  := 254
+ext_makegrains(grainSize, maxRegion, randomSeed)
+
+randomness := 1											// random variation 			(1 = +-100%)
+
+// average Py magnetic parameters set for region 0
+alpha 	= 0.008
+Ku1   	= 500													// uniaxial anisotropy			[J/m^3]
+Aex   	= 13e-12												// exchange energy				[J/m]		http://www.cwscholz.net/projects/diss/html/node58.html
+Msat  	= 866e3													// saturation magnetization 	[A/m]
+
+// set parameters for grains
+for i:=0; i<maxRegion; i++ {
+	randFactor2 := randomness*(2*rand()-1)
+	randFactor3 := randomness*(2*rand()-1)
+	randFactor4 := randomness*(2*rand()-1)
+	// Ms variation
+	Msat.SetRegion(i, Msat.GetRegion(0))
+	// constant anisotropy direction
+	axis1 := vector(randFactor2,randFactor3,randFactor4)		// (-1...1,-1...1,-1...1) orientation	
+	AnisU.SetRegion(i, axis1)     	
+	// constant anisotropy strength											
+	Ku1.SetRegion(i, Ku1.GetRegion(0))			
+	// constant damping
+	alpha.SetRegion(i, alpha.GetRegion(0))	
+	// constant exchange coupling between grains	
+	Aex.SetRegion(i, Aex.GetRegion(0))							
+}
+	
+//save starting conditions
+save(regions)
+save(Ku1)
+save(AnisU)
+save(Msat)
+save(exchCoupling)
+Snapshot(AnisU)
+Snapshot(alpha)
+Snapshot(Ku1)
+Snapshot(Msat)
+Snapshot(Regions)
+
+//init m							
+m = uniform(1,0,0).Add(0.1, randomMag());
+saveas(m,"m_init.ovf")
+Snapshotas(m,"m_init.png")
+B_ext = vector(0, 0, 0)	
+// relax M to x direction											
+run(10e-9)														
+saveas(m,"m_relax_0mT.ovf")
+Snapshotas(m,"m_relax_0mT.png")
+
+// relax to static field
+// static field in x direction
+B_ext = vector(bstat, 0, 0)	
+
+//relax in bstat field	
+run(10e-9)	
+saveas(m,"m_relax_bias.ovf")
+Snapshotas(m,"m_relax_bias.png")
+
+// static + excitation field
+B_ext = vector(bstat, amp*sin(2*pi*f*t), 0)
+// settling time
+run(210e-9)														
+
+//Simulation Time
+points 		:= 8192								
+tstep 		:= 12.5e-12											// 10ns -> largest fft-freq = 5GHz					12.5e-12s -> 40GHz
+simtime 	:= tstep * points
+
+//TableAdd(Crop(B_ext, 64, 65, 64, 65, 0, 1))					// cols 11,12,13 = B_ext
+//TableAutoSave(tstep)
+
+//save m_full as .ovf
+autosave(m_full,tstep)	
+
+// limit max solver step to avoid missing points in fft
+maxdt = 1e-12												
+
+// run simulation
+run(simtime)
