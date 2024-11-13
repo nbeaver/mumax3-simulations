@@ -49,7 +49,8 @@ start_time = time.perf_counter()
 table, fields = run_mumax3(script,simname)
 end_time = time.perf_counter()
 
-shutil.move(simname + '.out', savedir)
+if savedir is not '.':
+    shutil.move(simname + '.out', savedir)
 
 elapsed_time = end_time - start_time
 print(f"Elapsed time: {elapsed_time} seconds")

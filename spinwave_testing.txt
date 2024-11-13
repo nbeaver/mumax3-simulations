@@ -1,0 +1,18 @@
+
+setgridsize(1024,1024,1)
+setcellsize(1e-08,1e-08,1e-08)
+
+enabledemag = false
+Aex = 1.3e-11
+Msat = 800000.0
+alpha = 0.05
+
+Bx := 0.2
+B_ext = vector(0.2,0, 0)
+defregion(1,rect(5*1e-08,5*1e-08))
+B_ext.setregion(1, vector(0.2, 0, 0.01 * sinc( 2*pi*20000000000.0*(t-1e-08/2))))
+
+m = uniform(1,0,0) 
+autosave(m,2.5e-11)
+tableautosave(2.5e-11)
+run(1e-08)
