@@ -1,4 +1,7 @@
+*.mat
+*.npy
+*.out/
+*.png
 __pycache__/
 slurm_job_info/
-*.out/
 time_out/
