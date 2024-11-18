@@ -1,3 +1,3 @@
 #! /bin/bash
 
-sbatch sbatch_S11_step.sh
+sbatch sbatch_scripts/sbatch_tweak_Fig4A_step_002.sh

@@ -2,16 +2,14 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --time=4:00:00
-#SBATCH --job-name=mumax3_example
+#SBATCH --job-name=tweak_Fig4AB_step_001
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:1
 #SBATCH --kill-on-invalid-dep=yes
 #SBATCH --mail-type=ALL
 #SBATCH --output=slurm_job_info/%j/slurm-%j.out
 module load anaconda3 cuda
-OUTDIR=/work/sglabfiles/nathaniel/mumax3/slurm_out/${SLURM_JOB_ID}
 LOG=time_out/time_$(date +%F_%s_%N).txt
-mkdir -p "${OUTDIR}"
 mkdir -p "time_out"
 
 # Save environment and job information to local directory.
@@ -23,4 +21,6 @@ echo "$0" > "${local_dir}/info.txt"
 echo "$*" >> "${local_dir}/info.txt"
 
 /usr/bin/time --output=${LOG} --verbose \
-python3 run_sim.py
+mumax3 my_mx3_files/tweak_Fig4AB_step_001.mx3
+
+mumax3-convert -numpy my_mx3_files/tweak_Fig4AB_step_001.out/*.ovf
