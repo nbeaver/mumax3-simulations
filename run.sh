@@ -1,3 +1,3 @@
 #! /bin/bash
 
-sbatch sbatch_scripts/sbatch_tweak_Fig4A_step_002.sh
+for i in {001..026} ; do sbatch  sbatch_scripts/"sbatch_FeGaB_koerner_01_B_series_$i.sh" ; done
