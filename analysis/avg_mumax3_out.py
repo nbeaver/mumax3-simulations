@@ -102,32 +102,66 @@ def process_mumax_out(read_dir, write_dir):
         cells_list.x.append(dat[0])
         cells_list.y.append(dat[1])
         cells_list.z.append(dat[2])
+        del dat_raw, dat
+    del i, filepath
     cells = MyInfo()
     cells.x = np.stack(cells_list.x)
     cells.y = np.stack(cells_list.y)
     cells.z = np.stack(cells_list.z)
+    del cells_list
     nt, nx, ny = cells.z.shape
     reshape = MyInfo()
     fft = MyInfo()
+    fft_avg = MyInfo()
+
+    # x
     reshape.x = np.zeros((nx, ny, nt))
-    reshape.y = np.zeros((nx, ny, nt))
-    reshape.z = np.zeros((nx, ny, nt))
-    fft.x = np.zeros((nx, ny, nt), dtype=np.complex128)
-    fft.y = np.zeros((nx, ny, nt), dtype=np.complex128)
-    fft.z = np.zeros((nx, ny, nt), dtype=np.complex128)
     for i in range(nx):
         for j in range(ny):
             reshape.x[i][j] = cells.x[:, i, j]
-            reshape.y[i][j] = cells.y[:, i, j]
-            reshape.z[i][j] = cells.z[:, i, j]
+    del cells.x
+    fft.x = np.zeros((nx, ny, nt), dtype=np.complex128)
+    for i in range(nx):
+        for j in range(ny):
             fft.x[i][j] = np.fft.fft(reshape.x[i][j]/Msat)
-            fft.y[i][j] = np.fft.fft(reshape.y[i][j]/Msat)
-            fft.z[i][j] = np.fft.fft(reshape.z[i][j]/Msat)
-    fft_freq_Hz = np.fft.fftfreq(nt)/tstep
-    fft_avg = MyInfo()
+    del reshape.x
     fft_avg.x = np.abs(fft.x).mean((0,1))
+    del fft.x
+
+    # y
+    reshape.y = np.zeros((nx, ny, nt))
+    for i in range(nx):
+        for j in range(ny):
+            reshape.y[i][j] = cells.y[:, i, j]
+    del cells.y
+    fft.y = np.zeros((nx, ny, nt), dtype=np.complex128)
+    for i in range(nx):
+        for j in range(ny):
+            fft.y[i][j] = np.fft.fft(reshape.y[i][j]/Msat)
+    del reshape.y
     fft_avg.y = np.abs(fft.y).mean((0,1))
+    del fft.y
+
+    # z
+    reshape.z = np.zeros((nx, ny, nt))
+    for i in range(nx):
+        for j in range(ny):
+            reshape.z[i][j] = cells.z[:, i, j]
+    del cells.z
+    del cells
+    fft.z = np.zeros((nx, ny, nt), dtype=np.complex128)
+    for i in range(nx):
+        for j in range(ny):
+            fft.z[i][j] = np.fft.fft(reshape.z[i][j]/Msat)
+    del reshape.z
     fft_avg.z = np.abs(fft.z).mean((0,1))
+    del fft.z
+
+    del reshape
+    del fft
+
+    fft_freq_Hz = np.fft.fftfreq(nt)/tstep
+
     ns = 1e-9
     t_ns = np.linspace(0, tstep*nt, nt)/ns
     mat_dict_avg = {
