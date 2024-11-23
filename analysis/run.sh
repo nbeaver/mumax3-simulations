@@ -6,5 +6,9 @@
 #sbatch ../sbatch_scripts/sbatch_run_python_script.sh ../my_mx3_files/FeGaB_koerner_01_B_series_018.out B_series_01/
 #sbatch ../sbatch_scripts/sbatch_run_python_script.sh ../my_mx3_files/FeGaB_koerner_01_B_series_019.out B_series_01/
 #sbatch ../sbatch_scripts/sbatch_run_python_script.sh ../my_mx3_files/FeGaB_koerner_01_B_series_022.out B_series_01/
-for i in {007..013} ; do sbatch ../sbatch_scripts/sbatch_run_python_script.sh ../my_mx3_files/FeGaB_koerner_01_B_series_${i}.out B_series_01/ ; done
-sbatch ../sbatch_scripts/sbatch_run_python_script.sh ../my_mx3_files/FeGaB_koerner_01_B_series_015.out B_series_01/
+#for i in {007..013} ; do sbatch ../sbatch_scripts/sbatch_run_python_script.sh ../my_mx3_files/FeGaB_koerner_01_B_series_${i}.out B_series_01/ ; done
+#sbatch ../sbatch_scripts/sbatch_run_python_script.sh ../my_mx3_files/FeGaB_koerner_01_B_series_015.out B_series_01/
+#sbatch ../sbatch_scripts/sbatch_run_python_script.sh ../my_mx3_files/FeGaB_koerner_01_B_series_007.out B_series_01/
+#sbatch ../sbatch_scripts/sbatch_run_python_script.sh ../my_mx3_files/FeGaB_koerner_01_B_series_011.out B_series_01/
+#sbatch ../sbatch_scripts/sbatch_run_python_script.sh ../my_mx3_files/FeGaB_koerner_01_amp_series_006.out/ amp_series_01/
+sbatch ../sbatch_scripts/sbatch_run_python_script.sh ../my_mx3_files/FeGaB_koerner_01_amp_series_020.out/ amp_series_01/
