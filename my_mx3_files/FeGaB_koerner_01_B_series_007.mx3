@@ -1,5 +1,5 @@
 f 		:= 1425.0e6												// excitation freq				[Hz]
-bstat 	:= 13.4-e4												// static field					[T]
+bstat 	:= 13.4e-4												// static field					[T]
 amp 	:= 0.0007												// excitation amplitude 		[T_p]
 
 N := 256														// number of cells
