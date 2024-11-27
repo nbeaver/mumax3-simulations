@@ -113,7 +113,8 @@ simtime 	:= tstep * points
 //TableAutoSave(tstep)
 
 //save m_full as .ovf
-autosave(m_full,tstep)	
+save_step := 50e-12
+autosave(m_full, save_step)	
 
 // limit max solver step to avoid missing points in fft
 maxdt = 1e-12												
