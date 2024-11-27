@@ -1,5 +1,5 @@
 import numpy as np
-from mumax_python_helpers import *
+import mumax_python_helpers
 import os
 import shutil
 os.environ['PATH'] += ":/work/sglabfiles/software/mumax"
@@ -124,7 +124,7 @@ run(simtime)
 """
 
 start_time = time.perf_counter() 
-table, fields = run_mumax3(script,simname)
+table, fields = mumax_python_helpers.run_mumax3(script,simname)
 end_time = time.perf_counter()
 elapsed_time = end_time - start_time
 print(f"Elapsed time: {elapsed_time} seconds")
