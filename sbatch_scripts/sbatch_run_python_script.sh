@@ -1,7 +1,7 @@
 #! /bin/bash
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --job-name=python
+#SBATCH --job-name=avg_mumax3_out.py
 #SBATCH --partition=short
 #SBATCH --kill-on-invalid-dep=yes
 #SBATCH --mail-type=ALL
