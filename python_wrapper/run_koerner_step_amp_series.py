@@ -12,7 +12,7 @@ amp = float(sys.argv[2])
 print("index = '{}'".format(index))
 print("amp = '{}'".format(amp))
 #working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/amp_series_out"
-working_dir = "/scratch/n.beaver/amp_series_out"
+working_dir = "/scratch/n.beaver/amp_series_02_out"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "FeGaB_koerner_02_amp_series_{:03d}".format(index)
