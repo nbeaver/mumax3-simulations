@@ -11,10 +11,10 @@ amp = float(sys.argv[2])
 #amp = 7e-4
 print("index = '{}'".format(index))
 print("amp = '{}'".format(amp))
-## THIS IS WHERE THE DATA WILL BE MOVED TO AFTER SAVING
-working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/amp_series_out"
+#working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/amp_series_out"
+working_dir = "/scratch/n.beaver/amp_series_out"
+os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
-savedir = "/work/sglabfiles/nathaniel/mumax3-simulations/my_mx3_files"
 simname = "FeGaB_koerner_02_amp_series_{:03d}".format(index)
 
 
@@ -128,5 +128,3 @@ table, fields = run_mumax3(script,simname)
 end_time = time.perf_counter()
 elapsed_time = end_time - start_time
 print(f"Elapsed time: {elapsed_time} seconds")
-#if savedir != '.':
-#    shutil.move(simname + '.out', savedir)
