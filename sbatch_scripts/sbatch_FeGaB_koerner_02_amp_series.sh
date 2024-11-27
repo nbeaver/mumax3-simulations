@@ -23,4 +23,5 @@ echo "$*" >> "${local_dir}/info.txt"
 /usr/bin/time --output=${LOG} --verbose \
     python3 python_wrapper/run_koerner_step_amp_series.py "$1" "$2"
 
+# wrapper script already does this
 #mumax3-convert -numpy my_mx3_files/FeGaB_koerner_01_amp_series_001.out/*.ovf
