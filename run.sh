@@ -1,19 +1,19 @@
 #! /bin/bash
 
-sbatch -J 00_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  0 0.01000
-sbatch -J 01_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  1 0.01151
-sbatch -J 02_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  2 0.01326
-sbatch -J 03_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  3 0.01526
-sbatch -J 04_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  4 0.01758
-sbatch -J 05_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  5 0.02024
-sbatch -J 06_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  6 0.02330
-sbatch -J 07_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  7 0.02683
-sbatch -J 08_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  8 0.03089
-sbatch -J 09_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  9 0.03556
-sbatch -J 10_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh 10 0.04095
-sbatch -J 11_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh 11 0.04715
-sbatch -J 12_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh 12 0.05429
-sbatch -J 13_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh 13 0.06251
+#sbatch -J 00_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  0 0.01000
+#sbatch -J 01_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  1 0.01151
+#sbatch -J 02_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  2 0.01326
+#sbatch -J 03_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  3 0.01526
+#sbatch -J 04_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  4 0.01758
+#sbatch -J 05_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  5 0.02024
+#sbatch -J 06_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  6 0.02330
+#sbatch -J 07_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  7 0.02683
+#sbatch -J 08_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  8 0.03089
+#sbatch -J 09_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh  9 0.03556
+#sbatch -J 10_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh 10 0.04095
+#sbatch -J 11_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh 11 0.04715
+#sbatch -J 12_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh 12 0.05429
+#sbatch -J 13_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh 13 0.06251
 sbatch -J 14_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh 14 0.07197
 sbatch -J 15_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh 15 0.08286
 sbatch -J 16_FeGaB_amp_series sbatch_scripts/sbatch_FeGaB_koerner_02_amp_series.sh 16 0.09541
