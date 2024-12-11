@@ -12,7 +12,7 @@ amp = float(sys.argv[2])
 print("index = '{}'".format(index))
 print("amp = '{}'".format(amp))
 #working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/amp_series_out"
-working_dir = "/scratch/n.beaver/amp_series_02_out"
+working_dir = "/scratch/n.beaver/amp_series_03_out"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "FeGaB_koerner_02_amp_series_{:03d}".format(index)
@@ -113,8 +113,7 @@ simtime 	:= tstep * points
 //TableAutoSave(tstep)
 
 //save m_full as .ovf
-save_step := 50e-12
-autosave(m_full, save_step)	
+autosave(m_full, tstep)	
 
 // limit max solver step to avoid missing points in fft
 maxdt = 1e-12												
