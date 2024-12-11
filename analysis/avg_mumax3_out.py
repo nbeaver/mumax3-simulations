@@ -48,7 +48,10 @@ def parse_logfile(lines):
             except:
                 sys.stderr.write("failed on line #{}\n".format(i))
                 raise
-            p[name] = val
+            if name in p:
+                raise ValueError("duplicate value for '{}': '{}', '{}'".format(name, val, p[name]))
+            else:
+                p[name] = val
     return p
 
 
