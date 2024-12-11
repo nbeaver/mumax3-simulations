@@ -1,6 +1,7 @@
 #! /bin/bash
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
+#SBATCH --mem-per-cpu=50G
 #SBATCH --job-name=avg_mumax3_out.py
 #SBATCH --partition=short
 #SBATCH --kill-on-invalid-dep=yes
