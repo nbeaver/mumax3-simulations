@@ -38,6 +38,7 @@ def parse_line(line):
     return name, val
 
 def parse_logfile(lines):
+    #names = ["bstat", "amp", "Msat", "tstep", "save_step"]
     names = ["bstat", "amp", "Msat", "tstep"]
     ops = ['=', ':=']
     p = {}
@@ -89,6 +90,7 @@ def process_mumax_out(read_dir, write_dir):
         params = parse_logfile(fp.readlines())
     logging.debug("params = '{}'".format(params))
     tstep = params['tstep']
+    #save_step = params['save_step']
     Msat = params['Msat']
     npy_files = glob.glob(os.path.join(read_dir, 'm_full*.npy'))
     logging.debug("len(npy_files) = '{}'".format(len(npy_files)))
