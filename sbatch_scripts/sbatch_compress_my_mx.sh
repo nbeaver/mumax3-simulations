@@ -1,8 +1,10 @@
 #! /bin/bash
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --mem-per-cpu=8G
-#SBATCH --job-name=compress_my_mx3
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=32G
+#SBATCH --job-name=zstd_my_mx3
+#SBATCH --time=24:00:00
 #SBATCH --partition=short
 #SBATCH --kill-on-invalid-dep=yes
 #SBATCH --mail-type=ALL
@@ -19,4 +21,6 @@ echo "$0" > "${local_dir}/info.txt"
 echo "$*" >> "${local_dir}/info.txt"
 
 /usr/bin/time --output=${LOG} --verbose \
-tar -C /work/sglabfiles/nathaniel/mumax3-simulations -cJf /scratch/n.beaver/my_mx3_files.tar.xz my_mx3_files/
+tar -C /work/sglabfiles/nathaniel/mumax3-simulations --use-compress-program zstd -cf /scratch/n.beaver/my_mx3_files.tar.zst my_mx3_files/
+#tar -C /work/sglabfiles/nathaniel/mumax3-simulations -czf /scratch/n.beaver/my_mx3_files.tar.gz my_mx3_files/
+#tar -C /work/sglabfiles/nathaniel/mumax3-simulations -cJf /scratch/n.beaver/my_mx3_files.tar.xz my_mx3_files/

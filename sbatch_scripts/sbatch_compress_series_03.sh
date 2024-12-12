@@ -1,8 +1,10 @@
 #! /bin/bash
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --mem-per-cpu=8G
-#SBATCH --job-name=compress_03
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=32G
+#SBATCH --job-name=zstd_compress_03
+#SBATCH --time=24:00:00
 #SBATCH --partition=short
 #SBATCH --kill-on-invalid-dep=yes
 #SBATCH --mail-type=ALL
@@ -19,4 +21,6 @@ echo "$0" > "${local_dir}/info.txt"
 echo "$*" >> "${local_dir}/info.txt"
 
 /usr/bin/time --output=${LOG} --verbose \
-tar -C /scratch/n.beaver -cJf /scratch/n.beaver/amp_series_03_out.tar.xz amp_series_03_out/
+tar -C /scratch/n.beaver --use-compress-program zstd -cf /scratch/n.beaver/amp_series_03_out.tar.zst amp_series_03_out/
+#tar -C /scratch/n.beaver -czf /scratch/n.beaver/amp_series_03_out.tar.gz amp_series_03_out/
+#tar -C /scratch/n.beaver -cJf /scratch/n.beaver/amp_series_03_out.tar.xz amp_series_03_out/
