@@ -11,7 +11,7 @@ freq  = float(sys.argv[2])
 print("index = '{}'".format(index))
 print("freq = '{}'".format(freq))
 #working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/amp_series_out"
-working_dir = "/scratch/n.beaver/09_copus_isofreq_permalloy"
+working_dir = "/scratch/n.beaver/10_copus_isofreq_permalloy"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "copus_isofreq_permalloy_{:03d}".format(index)
@@ -24,7 +24,7 @@ Aex   = 1.3e-11    # [J/m] exchange constant
 Msat  = 8e5        # [A/m] saturation magnetization
 alpha = 0.0001     # damping parameter
 Ku1   = 0.0        # uniaxial anisotropy
-amp   = 20e-4      # [T] excitation amplitude
+amp   = 0.0e-4      # [T] excitation amplitude
 t     = 30e-9 # [m] thickness of film
 
 # Note that this is a format string, this means that the statements inside the
