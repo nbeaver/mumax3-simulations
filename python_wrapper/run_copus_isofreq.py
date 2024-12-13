@@ -22,7 +22,7 @@ simname = "copus_isofreq_permalloy_{:03d}".format(index)
 Bx    = 0.1        # [T] Bias field along the x direction
 Aex   = 1.3e-11    # [J/m] exchange constant
 Msat  = 8e5        # [A/m] saturation magnetization
-alpha = 0.0001     # damping parameter
+alpha = 0.0001     # [dimensionless] Gilbert damping parameter
 Ku1   = 0.0        # uniaxial anisotropy
 amp   = 20e-4      # [T] excitation amplitude
 t     = 30e-9 # [m] thickness of film
@@ -105,7 +105,8 @@ B_ext.add(mask1, amp*sin(2*pi*f*t))
 
 //Simulation Time
 points    := 210
-tstep     := 10e-12 // 10ns -> largest fft-freq = 5GHz, 12.5e-12s -> 40GHz
+// time step, reqall f_Nyquist = 1/(2 dt)
+tstep     := 10e-12
 simtime   := tstep * points
 
 //save m_full as .ovf
