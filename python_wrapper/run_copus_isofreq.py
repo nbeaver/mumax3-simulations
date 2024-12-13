@@ -11,7 +11,7 @@ freq  = float(sys.argv[2])
 print("index = '{}'".format(index))
 print("freq = '{}'".format(freq))
 #working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/amp_series_out"
-working_dir = "/scratch/n.beaver/12_copus_isofreq_permalloy"
+working_dir = "/scratch/n.beaver/13_copus_isofreq_permalloy"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "copus_isofreq_permalloy_{:03d}".format(index)
@@ -84,7 +84,7 @@ Snapshot(Regions)
 // mask for excitation field
 mask1 := newVectorMask(Nx, Ny, Nz)
 
-i_0 := 255
+i_0 := 511
 j_0 := 511
 k_0 := 0
 for i := 0; i < 2; i++ {{
