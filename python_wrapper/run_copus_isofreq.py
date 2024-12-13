@@ -11,7 +11,7 @@ freq  = float(sys.argv[2])
 print("index = '{}'".format(index))
 print("freq = '{}'".format(freq))
 #working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/amp_series_out"
-working_dir = "/scratch/n.beaver/10_copus_isofreq_permalloy"
+working_dir = "/scratch/n.beaver/11_copus_isofreq_permalloy"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "copus_isofreq_permalloy_{:03d}".format(index)
@@ -35,7 +35,7 @@ f := {freq}      // excitation freq       [Hz]
 bstat := {Bx}    // static field          [T]
 amp := 0.0007    // excitation amplitude  [T_p]
 
-Nx := 512        // number of cells in x-direction
+Nx := 1024       // number of cells in x-direction
 Ny := 1024       // number of cells in y-direction
 Nz := 1          // number of cells in z-direction
 c := 5e-9        // cell width           [m]
@@ -72,7 +72,9 @@ save(exchCoupling)
 B_ext = vector(bstat, 0, 0)
 m = uniform(1,0,0)
 // relax M to x direction
-//run(10e-9)
+relax() // high-energy states best minimized by relax() 
+// save starting magnetization
+save(m)
 
 Snapshot(alpha)
 Snapshot(Ku1)
