@@ -11,7 +11,7 @@ freq  = float(sys.argv[2])
 print("index = '{}'".format(index))
 print("freq = '{}'".format(freq))
 #working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/amp_series_out"
-working_dir = "/scratch/n.beaver/15_copus_isofreq_permalloy"
+working_dir = "/scratch/n.beaver/16_copus_isofreq_permalloy"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "copus_isofreq_permalloy_{:03d}".format(index)
@@ -115,7 +115,7 @@ simtime   := tstep * points
 autosave(m_full, tstep)
 
 // limit max solver step to avoid missing points in fft
-maxdt = 1e-12
+maxdt = 0.1e-12
 
 // run simulation
 run(simtime)
