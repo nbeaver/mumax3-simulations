@@ -11,7 +11,7 @@ freq  = float(sys.argv[2])
 print("index = '{}'".format(index))
 print("freq = '{}'".format(freq))
 #working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/amp_series_out"
-working_dir = "/scratch/n.beaver/13_copus_isofreq_permalloy"
+working_dir = "/scratch/n.beaver/14_copus_isofreq_permalloy"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "copus_isofreq_permalloy_{:03d}".format(index)
@@ -108,7 +108,7 @@ B_ext.add(mask1, amp*sin(2*pi*f*t))
 //Simulation Time
 points    := 210
 // time step, reqall f_Nyquist = 1/(2 dt)
-tstep     := 10e-12
+tstep     := 1.0e-12
 simtime   := tstep * points
 
 //save m_full as .ovf
