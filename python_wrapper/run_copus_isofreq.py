@@ -11,7 +11,7 @@ freq  = float(sys.argv[2])
 print("index = '{}'".format(index))
 print("freq = '{}'".format(freq))
 #working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/amp_series_out"
-working_dir = "/scratch/n.beaver/06_copus_isofreq_permalloy"
+working_dir = "/scratch/n.beaver/09_copus_isofreq_permalloy"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "copus_isofreq_permalloy_{:03d}".format(index)
@@ -27,18 +27,20 @@ Ku1   = 0.0        # uniaxial anisotropy
 amp   = 20e-4      # [T] excitation amplitude
 t     = 30e-9 # [m] thickness of film
 
-# Note that this is a format string, this means that the statements inside the 
-# curly brackets get evaluated by python. In this way, we insert the values of 
+# Note that this is a format string, this means that the statements inside the
+# curly brackets get evaluated by python. In this way, we insert the values of
 # the variables above in the script.
 script=f"""
 f := {freq}      // excitation freq       [Hz]
 bstat := {Bx}    // static field          [T]
 amp := 0.0007    // excitation amplitude  [T_p]
 
-N := 1024        // number of cells
+Nx := 512        // number of cells in x-direction
+Ny := 1024       // number of cells in y-direction
+Nz := 1          // number of cells in z-direction
 c := 5e-9        // cell width           [m]
 d := {t}         // cell height          [m]
-setgridsize(N, N, 1)  
+setgridsize(Nx, Ny, Nz)
 setcellsize(c, c, d)
 
 // define grains with region number 0-254
@@ -59,7 +61,7 @@ for i:=0; i<maxRegion; i++ {{
   alpha.SetRegion(i, alpha.GetRegion(0))
   Aex.SetRegion(i, Aex.GetRegion(0))
 }}
-  
+
 //save starting conditions
 save(regions)
 save(Msat)
@@ -67,10 +69,10 @@ save(exchCoupling)
 
 // relax to static field
 // static field in x direction
-B_ext = vector(bstat, 0, 0)                  
+B_ext = vector(bstat, 0, 0)
 m = uniform(1,0,0)
-// relax M to x direction                      
-//run(10e-9)                            
+// relax M to x direction
+//run(10e-9)
 
 Snapshot(alpha)
 Snapshot(Ku1)
@@ -78,33 +80,43 @@ Snapshot(Msat)
 Snapshot(Regions)
 
 // mask for excitation field
-mask1 := newVectorMask(1024, 1024, 1)
+mask1 := newVectorMask(Nx, Ny, Nz)
 
-for x := 0; x < 2; x++ {{
-  for y := 0; y < 2; y++ {{
-    for z := 0; z < 1; z++ {{
-      mask1.setVector(x + 511, y + 511, z + 0, Vector(0.0, 0.0, 1.0)) 
+i_0 := 255
+j_0 := 511
+k_0 := 0
+for i := 0; i < 2; i++ {{
+  for j := 0; j < 2; j++ {{
+    for k := 0; k < 1; k++ {{
+      ii := i + i_0
+      jj := j + j_0
+      kk := k + k_0
+      r := index2coord(ii, jj, kk)
+      x := r.X()
+      y := r.Y()
+      print(i, j, k, ii, jj, kk, x, y)
+      mask1.setVector(ii, jj, kk, Vector(0.0, 0.0, 1.0))
     }}
   }}
 }}
 B_ext.add(mask1, amp*sin(2*pi*f*t))
 
 //Simulation Time
-points    := 210                    
+points    := 210
 tstep     := 10e-12 // 10ns -> largest fft-freq = 5GHz, 12.5e-12s -> 40GHz
 simtime   := tstep * points
 
 //save m_full as .ovf
-autosave(m_full, tstep)  
+autosave(m_full, tstep)
 
 // limit max solver step to avoid missing points in fft
-maxdt = 1e-12                        
+maxdt = 1e-12
 
 // run simulation
 run(simtime)
 """
 
-start_time = time.perf_counter() 
+start_time = time.perf_counter()
 table, fields = mumax_python_helpers.run_mumax3(script,simname)
 end_time = time.perf_counter()
 elapsed_time = end_time - start_time
