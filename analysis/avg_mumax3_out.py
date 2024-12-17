@@ -17,7 +17,15 @@ class MyInfo:
     def __str__(self):
         return self.__class__.__name__ + '(' + str(list(self.__dict__.keys())) + ')'
 
-def parse_line(line):
+def parse_line(line_raw):
+    """
+    Parse a single line of mumax3 output file.
+    """
+    line_raw = line_raw.strip() # remove whitespace
+    if '//' in line_raw:
+        line, comment = line_raw.split('//', 1)
+    else:
+        line = line_raw
     if ':=' in line:
         try:
             name_raw, val_raw = line.split(':=')
@@ -42,6 +50,12 @@ def parse_logfile(lines):
     ops = ['=', ':=']
     p = {}
     for i, line in enumerate(lines):
+        if line.strip().startswith('for '):
+            # Skip for loop lines
+            continue
+        if line.strip().startswith('// '):
+            # Skip lines that are just comments.
+            continue
         if any([line.startswith(name) for name in names]) and any([op in line for op in ops]):
             try:
                 name, val = parse_line(line)
