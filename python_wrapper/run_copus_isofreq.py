@@ -37,11 +37,18 @@ f := {freq}      // excitation freq       [Hz]
 bstat := {Bx}    // static field          [T]
 amp := 0.0007    // excitation amplitude  [T_p]
 
+// Already defined, so don't use :=
+alpha   = {alpha}
+Ku1     = {Ku1}
+Aex     = {Aex}
+Msat    = {Msat}
+
 Nx := 1024       // number of cells in x-direction
 Ny := 1024       // number of cells in y-direction
 Nz := 1          // number of cells in z-direction
 c := 5e-9        // cell width           [m]
 d := {t}         // cell height          [m]
+
 setgridsize(Nx, Ny, Nz)
 setcellsize(c, c, d)
 
@@ -50,12 +57,6 @@ grainSize  := 40e-9          // grain size           [m]
 randomSeed := 123456789
 maxRegion  := 255
 ext_makegrains(grainSize, maxRegion, randomSeed)
-
-// Already defined, so don't use :=
-alpha   = {alpha}
-Ku1     = {Ku1}
-Aex     = {Aex}
-Msat    = {Msat}
 
 // set uniform parameters for grains
 for i:=0; i<maxRegion; i++ {{
