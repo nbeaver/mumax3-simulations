@@ -11,7 +11,7 @@ freq  = float(sys.argv[2])
 print("index = '{}'".format(index))
 print("freq = '{}'".format(freq))
 #working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/amp_series_out"
-working_dir = "/scratch/n.beaver/21_copus_isofreq_permalloy"
+working_dir = "/scratch/n.beaver/22_copus_isofreq_permalloy"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "copus_isofreq_permalloy_{:03d}".format(index)
@@ -51,19 +51,6 @@ d := {t}         // cell height          [m]
 
 setgridsize(Nx, Ny, Nz)
 setcellsize(c, c, d)
-
-// define grains with region number 0-254
-grainSize  := 40e-9          // grain size           [m]
-randomSeed := 123456789
-maxRegion  := 255
-ext_makegrains(grainSize, maxRegion, randomSeed)
-
-// set uniform parameters for grains
-for i:=0; i<maxRegion; i++ {{
-  Msat.SetRegion(i, Msat.GetRegion(0))
-  alpha.SetRegion(i, alpha.GetRegion(0))
-  Aex.SetRegion(i, Aex.GetRegion(0))
-}}
 
 //save starting conditions
 save(regions)
