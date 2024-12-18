@@ -16,8 +16,6 @@ os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "copus_isofreq_permalloy_{:03d}".format(index)
 
-# Based on Copus, et al. 2022
-# https://doi.org/10.1063/5.0101394
 
 # MATERIAL/SYSTEM PARAMETERS
 #freq  = 9.0e9     # [Hz] excitation frequency
@@ -33,6 +31,8 @@ t     = 30e-9 # [m] thickness of film
 # curly brackets get evaluated by python. In this way, we insert the values of
 # the variables above in the script.
 script=f"""
+// Based on Copus, et al. 2022
+// https://doi.org/10.1063/5.0101394
 f := {freq}      // excitation freq       [Hz]
 bstat := {Bx}    // static field          [T]
 amp := 0.0007    // excitation amplitude  [T_p]
