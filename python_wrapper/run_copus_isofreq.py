@@ -11,7 +11,7 @@ freq  = float(sys.argv[2])
 print("index = '{}'".format(index))
 print("freq = '{}'".format(freq))
 #working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/amp_series_out"
-working_dir = "/scratch/n.beaver/22_copus_isofreq_permalloy"
+working_dir = "/scratch/n.beaver/23_copus_isofreq_permalloy"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "copus_isofreq_permalloy_{:03d}".format(index)
@@ -35,7 +35,7 @@ script=f"""
 // https://doi.org/10.1063/5.0101394
 f := {freq}      // excitation freq       [Hz]
 bstat := {Bx}    // static field          [T]
-amp := 0.0007    // excitation amplitude  [T_p]
+amp := {amp}     // excitation amplitude  [T_p]
 
 // Already defined, so don't use :=
 alpha   = {alpha}
