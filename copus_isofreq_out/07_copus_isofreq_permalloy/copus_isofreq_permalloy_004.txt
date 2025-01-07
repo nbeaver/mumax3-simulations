@@ -1,0 +1,72 @@
+
+f := 25000000000.0      // excitation freq       [Hz]
+bstat := 0.1    // static field          [T]
+amp := 0.0007    // excitation amplitude  [T_p]
+
+N := 1024        // number of cells
+c := 5e-9        // cell width           [m]
+d := 3e-08         // cell height          [m]
+setgridsize(N, N, 1)  
+setcellsize(c, c, d)
+
+// define grains with region number 0-254
+grainSize  := 40e-9          // grain size           [m]
+randomSeed := 123456789
+maxRegion  := 255
+ext_makegrains(grainSize, maxRegion, randomSeed)
+
+// Already defined, so don't use :=
+alpha   = 0.0001
+Ku1     = 0.0
+Aex     = 1.3e-11
+Msat    = 800000.0
+
+// set uniform parameters for grains
+for i:=0; i<maxRegion; i++ {
+  Msat.SetRegion(i, Msat.GetRegion(0))
+  alpha.SetRegion(i, alpha.GetRegion(0))
+  Aex.SetRegion(i, Aex.GetRegion(0))
+}
+  
+//save starting conditions
+save(regions)
+save(Msat)
+save(exchCoupling)
+
+// relax to static field
+// static field in x direction
+B_ext = vector(bstat, 0, 0)                  
+m = uniform(1,0,0)
+// relax M to x direction                      
+//run(10e-9)                            
+
+Snapshot(alpha)
+Snapshot(Ku1)
+Snapshot(Msat)
+Snapshot(Regions)
+
+// mask for excitation field
+mask1 := newVectorMask(1024, 1024, 1)
+
+for x := 0; x < 2; x++ {
+  for y := 0; y < 2; y++ {
+    for z := 0; z < 1; z++ {
+      mask1.setVector(x + 511, y + 511, z + 0, Vector(0.0, 0.0, 1.0)) 
+    }
+  }
+}
+B_ext.add(mask1, -amp*sin(2*pi*f*t))
+
+//Simulation Time
+points    := 210                    
+tstep     := 10e-12 // 10ns -> largest fft-freq = 5GHz, 12.5e-12s -> 40GHz
+simtime   := tstep * points
+
+//save m_full as .ovf
+autosave(m_full, tstep)  
+
+// limit max solver step to avoid missing points in fft
+maxdt = 1e-12                        
+
+// run simulation
+run(simtime)
