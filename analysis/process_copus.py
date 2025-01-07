@@ -29,7 +29,7 @@ def parse_line(line_raw):
     return name, val
 
 def parse_logfile(lines):
-    names = ["f", "bstat", "amp", "alpha", "Ku1", "Aex", "Msat", "tstep", "save_step", "Nx", "Ny", "Nz", "c", "d"]
+    names = ["f", "bstat", "amp", "alpha", "Ku1", "Aex", "Msat", "tstep", "save_step", "Nx", "Ny", "Nz", "c", "d", "maxdt"]
     ops = ['=', ':=']
     p = {}
     for i, line in enumerate(lines):
