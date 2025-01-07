@@ -10,7 +10,7 @@ index = int(sys.argv[1])
 freq  = float(sys.argv[2])
 print("index = '{}'".format(index))
 print("freq = '{}'".format(freq))
-working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/fegab_isofreq_out/02_fegab"
+working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/fegab_isofreq_out/03_fegab"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "fegab_isofreq_{:03d}".format(index)
@@ -104,7 +104,7 @@ B_ext.add(mask1, amp*sin(2*pi*f*t))
 //Simulation Time
 points    := 210
 // time step, reqall f_Nyquist = 1/(2 dt)
-tstep     := 100e-12
+tstep     := 1000e-12
 simtime   := tstep * points
 
 //save m_full as .ovf
