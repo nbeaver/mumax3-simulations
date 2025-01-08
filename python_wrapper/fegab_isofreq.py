@@ -81,9 +81,9 @@ Snapshot(Regions)
 // mask for excitation field
 mask1 := newVectorMask(Nx, Ny, Nz)
 
-// TODO: calculate i_0 and j_0 automatically.
-i_0 := 511
-j_0 := 511
+// DONE: calculate i_0 and j_0 from Nx and Ny.
+i_0 := (Nx/2)-1
+j_0 := (Ny/2)-1
 k_0 := 0
 for i := 0; i < 2; i++ {{
   for j := 0; j < 2; j++ {{
