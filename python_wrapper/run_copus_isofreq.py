@@ -1,7 +1,5 @@
-import numpy as np
 import mumax_python_helpers
 import os
-import shutil
 os.environ['PATH'] += ":/work/sglabfiles/software/mumax"
 import time
 import sys
