@@ -30,6 +30,7 @@ def read_mumax3_ovffiles(outputdir):
     for npyfile in glob(outputdir+"/*.npy"):
         key = path.splitext(path.basename(npyfile))[0]
         fields[key] = np.load(npyfile)
+    # TODO: remove the ovf files if the conversion succeeds.
     
     return fields
 

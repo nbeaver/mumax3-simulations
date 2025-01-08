@@ -1,0 +1,1 @@
+- [ ] Remove leftover .ovf files after converting to .npy files
