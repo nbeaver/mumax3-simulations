@@ -21,4 +21,4 @@ echo "$0" > "${local_dir}/info.txt"
 echo "$*" >> "${local_dir}/info.txt"
 
 /usr/bin/time --output=${LOG} --verbose \
-find /scratch/n.beaver/ -name '*.ovf' -delete
+find "$@" -name '*.ovf' -delete
