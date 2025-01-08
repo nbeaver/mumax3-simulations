@@ -10,6 +10,10 @@ index = int(sys.argv[1])
 freq  = float(sys.argv[2])
 print("index = '{}'".format(index))
 print("freq = '{}'".format(freq))
+
+job_name = os.environ['SLURM_JOB_NAME']
+print("SLURM_JOB_NAME = '{}'".format(job_name))
+
 working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/fegab_isofreq_out/07_fegab"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
