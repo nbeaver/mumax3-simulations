@@ -10,7 +10,7 @@ index = int(sys.argv[1])
 freq  = float(sys.argv[2])
 print("index = '{}'".format(index))
 print("freq = '{}'".format(freq))
-working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/fegab_isofreq_out/06_fegab"
+working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/fegab_isofreq_out/07_fegab"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "fegab_isofreq_{:03d}".format(index)
@@ -42,8 +42,8 @@ Ku1     = {Ku1}
 Aex     = {Aex}
 Msat    = {Msat}
 
-Nx := 2048       // number of cells in x-direction
-Ny := 2048       // number of cells in y-direction
+Nx := 4096       // number of cells in x-direction
+Ny := 4096       // number of cells in y-direction
 Nz := 1          // number of cells in z-direction
 c := 5e-9        // cell width           [m]
 d := {t}         // cell height          [m]
@@ -102,7 +102,7 @@ for i := 0; i < 2; i++ {{
 B_ext.add(mask1, amp*sin(2*pi*f*t))
 
 //Simulation Time
-points    := 10
+points    := 20
 // time step, recall f_Nyquist = 1/(2 dt)
 tstep     := 100e-12
 simtime   := tstep * points
