@@ -12,7 +12,7 @@ print("freq = '{}'".format(freq))
 job_name = os.environ['SLURM_JOB_NAME']
 print("SLURM_JOB_NAME = '{}'".format(job_name))
 
-working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_isofreq_out/02_yig"
+working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_isofreq_out/03_yig"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "yig_isofreq_{:03d}".format(index)
@@ -20,13 +20,13 @@ simname = "yig_isofreq_{:03d}".format(index)
 
 # MATERIAL/SYSTEM PARAMETERS
 #freq  = 9.0e9     # [Hz] excitation frequency
-Bx    = 12e-4      # [T] Bias field along the x direction
+Bx    = 327e-4     # [T] Bias field along the x direction
 Aex   = 4.15e-12   # [J/m] exchange constant
-Msat  = 1.42e5     # [A/m] saturation magnetization
+Msat  = 1.6e5      # [A/m] saturation magnetization
 alpha = 0.005      # [dimensionless] Gilbert damping parameter
 Ku1   = 0.0        # uniaxial anisotropy
 amp   = 2e-4       # [T] excitation amplitude
-t     = 20e-9      # [m] thickness of film
+t     = 3e-6       # [m] thickness of film
 
 # Note that this is a format string, this means that the statements inside the
 # curly brackets get evaluated by python. In this way, we insert the values of
@@ -112,7 +112,7 @@ simtime   := tstep * points
 autosave(m_full, tstep)
 
 // limit max solver step to avoid missing points in fft
-maxdt = 0.1e-12
+maxdt = 1.0e-12
 
 // run simulation
 run(simtime)
