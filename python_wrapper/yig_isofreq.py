@@ -12,7 +12,7 @@ print("freq = '{}'".format(freq))
 job_name = os.environ['SLURM_JOB_NAME']
 print("SLURM_JOB_NAME = '{}'".format(job_name))
 
-working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_isofreq_out/03_yig"
+working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_isofreq_out/04_yig"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "yig_isofreq_{:03d}".format(index)
@@ -26,7 +26,7 @@ Msat  = 1.6e5      # [A/m] saturation magnetization
 alpha = 0.005      # [dimensionless] Gilbert damping parameter
 Ku1   = 0.0        # uniaxial anisotropy
 amp   = 2e-4       # [T] excitation amplitude
-t     = 3e-6       # [m] thickness of film
+t     = 130e-9       # [m] thickness of film
 
 # Note that this is a format string, this means that the statements inside the
 # curly brackets get evaluated by python. In this way, we insert the values of
