@@ -12,7 +12,7 @@ print("freq = '{}'".format(freq))
 job_name = os.environ['SLURM_JOB_NAME']
 print("SLURM_JOB_NAME = '{}'".format(job_name))
 
-working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_isofreq_out/05_yig"
+working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_isofreq_out/06_yig"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "yig_isofreq_{:03d}".format(index)
@@ -25,7 +25,7 @@ Aex   = 4.15e-12   # [J/m] exchange constant
 Msat  = 1.6e5      # [A/m] saturation magnetization
 alpha = 0.005      # [dimensionless] Gilbert damping parameter
 Ku1   = 0.0        # uniaxial anisotropy
-amp   = 2e-7       # [T] excitation amplitude
+amp   = 2e-4       # [T] excitation amplitude
 t     = 130e-9       # [m] thickness of film
 
 # Note that this is a format string, this means that the statements inside the
@@ -111,8 +111,10 @@ simtime   := tstep * points
 //save m_full as .ovf
 autosave(m_full, tstep)
 
-// limit max solver step to avoid missing points in fft
+// limit max solver timestep
 maxdt = 1.0e-12
+// limit max solver error (default 1e-5)
+MaxErr = 1e-8
 
 // run simulation
 run(simtime)
