@@ -12,7 +12,7 @@ print("freq = '{}'".format(freq))
 job_name = os.environ['SLURM_JOB_NAME']
 print("SLURM_JOB_NAME = '{}'".format(job_name))
 
-working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_stripline_y_out/02_yig"
+working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_stripline_y_out/03_yig"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "yig_isofreq_{:03d}".format(index)
@@ -25,7 +25,7 @@ Aex   = 4.15e-12   # [J/m] exchange constant
 Msat  = 1.6e5      # [A/m] saturation magnetization
 alpha = 0.005      # [dimensionless] Gilbert damping parameter
 Ku1   = 0.0        # uniaxial anisotropy
-amp   = 2e-7       # [T] excitation amplitude
+amp   = 2e-5       # [T] excitation amplitude
 t     = 130e-9       # [m] thickness of film
 
 # Note that this is a format string, this means that the statements inside the
