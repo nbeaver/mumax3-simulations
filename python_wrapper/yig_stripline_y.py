@@ -12,7 +12,7 @@ print("freq = '{}'".format(freq))
 job_name = os.environ['SLURM_JOB_NAME']
 print("SLURM_JOB_NAME = '{}'".format(job_name))
 
-working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_stripline_y_out/06_yig"
+working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_stripline_y_out/07_yig"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "yig_isofreq_{:03d}".format(index)
@@ -100,6 +100,12 @@ for i := 0; i < 2; i++ {{
   }}
 }}
 B_ext.add(mask1, amp*sin(2*pi*f*t))
+
+
+defregion(24,xrange(Nx*c))
+alpha.setregion(24,1e-2)
+defregion(25,yrange(Ny*Ny))
+alpha.setregion(25,1e-2)
 
 //Simulation Time
 points    := 20
