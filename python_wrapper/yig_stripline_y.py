@@ -12,7 +12,7 @@ print("freq = '{}'".format(freq))
 job_name = os.environ['SLURM_JOB_NAME']
 print("SLURM_JOB_NAME = '{}'".format(job_name))
 
-working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_stripline_y_out/09_yig"
+working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_stripline_y_out/10_yig"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "yig_isofreq_{:03d}".format(index)
@@ -52,7 +52,7 @@ d := {t}         // cell height          [m]
 
 setgridsize(Nx, Ny, Nz)
 setcellsize(c, c, d)
-setpbc(1,1,0) // periodic boundary conditions in x and y
+// setpbc(1,1,0) // periodic boundary conditions in x and y
 
 //save starting conditions
 save(regions)
@@ -115,7 +115,7 @@ alpha.setregion(4, 1.0)
 //Simulation Time
 points    := 20
 // time step, recall f_Nyquist = 1/(2 dt)
-tstep     := 210e-12
+tstep     := 420e-12
 simtime   := tstep * points
 
 //save m_full as .ovf
