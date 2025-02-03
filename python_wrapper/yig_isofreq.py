@@ -12,7 +12,7 @@ print("freq = '{}'".format(freq))
 job_name = os.environ['SLURM_JOB_NAME']
 print("SLURM_JOB_NAME = '{}'".format(job_name))
 
-working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_isofreq_out/07_yig"
+working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_isofreq_out/08_yig"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "yig_isofreq_{:03d}".format(index)
@@ -52,7 +52,7 @@ d := {t}         // cell height          [m]
 
 setgridsize(Nx, Ny, Nz)
 setcellsize(c, c, d)
-setpbc(1,1,0) // periodic boundary conditions in x and y
+// setpbc(1,1,0) // periodic boundary conditions in x and y
 
 //save starting conditions
 save(regions)
@@ -103,6 +103,16 @@ for i := 0; i < 2; i++ {{
 }}
 B_ext.add(mask1, amp*sin(2*pi*f*t))
 
+// absorbing boundary layers.
+DefRegion(1, xrange(0*c, 1*c))
+alpha.setregion(1, 1.0)
+DefRegion(2, xrange((Nx-1)*c, Nx*c))
+alpha.setregion(2, 1.0)
+DefRegion(3, yrange(0*c, 1*c))
+alpha.setregion(3, 1.0)
+DefRegion(4, xrange((Ny-1)*c, Ny*c))
+alpha.setregion(4, 1.0)
+
 //Simulation Time
 points    := 10
 // time step, recall f_Nyquist = 1/(2 dt)
@@ -112,7 +122,9 @@ simtime   := tstep * points
 //save m_full as .ovf
 autosave(m_full, tstep)
 
-// limit max solver timestep
+// limit max solver timestep TODO: what is the default?
+print("default maxdt = ",maxdt)
+print("default EdgeSmooth = ",EdgeSmooth)
 maxdt = 1.0e-12
 // limit max solver error (default 1e-5)
 MaxErr = 1e-8

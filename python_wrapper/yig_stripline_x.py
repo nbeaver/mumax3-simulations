@@ -12,7 +12,7 @@ print("freq = '{}'".format(freq))
 job_name = os.environ['SLURM_JOB_NAME']
 print("SLURM_JOB_NAME = '{}'".format(job_name))
 
-working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_stripline_x_out/08_yig"
+working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_stripline_x_out/09_yig"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "yig_isofreq_{:03d}".format(index)
@@ -107,6 +107,16 @@ points    := 20
 // time step, recall f_Nyquist = 1/(2 dt)
 tstep     := 210e-12
 simtime   := tstep * points
+
+// absorbing boundary layers.
+DefRegion(1, xrange(0*c, 1*c))
+alpha.setregion(1, 1.0)
+DefRegion(2, xrange((Nx-1)*c, Nx*c))
+alpha.setregion(2, 1.0)
+DefRegion(3, yrange(0*c, 1*c))
+alpha.setregion(3, 1.0)
+DefRegion(4, xrange((Ny-1)*c, Ny*c))
+alpha.setregion(4, 1.0)
 
 //save m_full as .ovf
 autosave(m_full, tstep)
