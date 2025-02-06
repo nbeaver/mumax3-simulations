@@ -12,7 +12,7 @@ print("freq = '{}'".format(freq))
 job_name = os.environ['SLURM_JOB_NAME']
 print("SLURM_JOB_NAME = '{}'".format(job_name))
 
-working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_isofreq_out/08_yig"
+working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_isofreq_out/09_yig"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "yig_isofreq_{:03d}".format(index)
@@ -72,7 +72,7 @@ MagRight       := 1
 ext_rmSurfaceCharge(BoundaryRegion, MagLeft, MagRight)
 
 // relax M to x direction
-relax() // high-energy states best minimized by relax() 
+relax() // high-energy states best minimized by relax()
 // save starting magnetization
 save(m)
 
@@ -104,14 +104,31 @@ for i := 0; i < 2; i++ {{
 B_ext.add(mask1, amp*sin(2*pi*f*t))
 
 // absorbing boundary layers.
-DefRegion(1, xrange(0*c, 1*c))
-alpha.setregion(1, 1.0)
-DefRegion(2, xrange((Nx-1)*c, Nx*c))
-alpha.setregion(2, 1.0)
-DefRegion(3, yrange(0*c, 1*c))
-alpha.setregion(3, 1.0)
-DefRegion(4, xrange((Ny-1)*c, Ny*c))
-alpha.setregion(4, 1.0)
+ABL_alpha1 := alpha //alpha at start of ABL
+ABL_alpha2 := 1.0 //alpha at stop of ABL
+ABL_c := c // Cellsize along x and y
+ABL_pow := 2 // polynomial order
+ABL_Nstep := 40 // steps to use on edge, usually 200 nm
+ABL_range := ABL_N * ABL_c
+ABL_coeff := (ABL_alpha2 - ABL_alpha1)/(Pow((ABL_range, ABL_pow)) // Polynomial coefficient
+ABL_region_index_start := 1 // change as needed
+ABL_xmax := (Nx/2) * ABL_c
+ABL_ymax := (Ny/2) * ABL_c
+ABL_x0 := ABL_xmax - (ABL_c * ABL_Nstep)
+ABL_y0 := ABL_ymax - (ABL_c * ABL_Nstep)
+// Set the damping with nesting rectangular borders.
+for i := 0; i < ABL_Nstep; i++ {
+  xi := ABL_x0 + i*ABL_c
+  yi := ABL_y0 + i*ABL_c
+  // rectangular slices
+  border_i := Rect(xi*2,yi*2).Sub(Rect( (xi-ABL_c)*2, (yi-ABL_c)*2 ))
+  // alpha = a*(x-x0)**2
+  alpha_i := ABL_coeff*Pow(this_x - ABL_x0, ABL_pow)
+  region_i := ABL_region_index_start + i
+  DefRegion(region_i, border_i)
+  alpha.setregion(region_i, alpha_i)
+}
+
 
 //Simulation Time
 points    := 10
