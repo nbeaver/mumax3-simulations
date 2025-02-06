@@ -12,7 +12,7 @@ print("freq = '{}'".format(freq))
 job_name = os.environ['SLURM_JOB_NAME']
 print("SLURM_JOB_NAME = '{}'".format(job_name))
 
-working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_stripline_x_out/11_yig"
+working_dir = "/work/sglabfiles/nathaniel/mumax3-simulations/yig_stripline_x_out/12_yig"
 os.makedirs(working_dir, exist_ok=True)
 os.chdir(working_dir)
 simname = "yig_isofreq_{:03d}".format(index)
@@ -54,6 +54,32 @@ setgridsize(Nx, Ny, Nz)
 setcellsize(c, c, d)
 // setpbc(1,1,0) // periodic boundary conditions in x and y
 
+// absorbing boundary layers.
+ABL_alpha1 := {alpha} // alpha at start of ABL
+ABL_alpha2 := 1.0 //alpha at stop of ABL
+ABL_c := c // Cellsize along x and y
+ABL_pow := 2 // polynomial order
+ABL_Nstep := 40 // steps to use on edge, usually 200 nm
+ABL_range := ABL_Nstep * ABL_c
+ABL_coeff := (ABL_alpha2 - ABL_alpha1)/Pow(ABL_range, ABL_pow) // Polynomial coefficient
+ABL_region_index_start := 1 // change as needed
+ABL_xmax := (Nx/2) * ABL_c
+ABL_ymax := (Ny/2) * ABL_c
+ABL_x0 := ABL_xmax - (ABL_c * ABL_Nstep)
+ABL_y0 := ABL_ymax - (ABL_c * ABL_Nstep)
+// Set the damping with nesting rectangular borders.
+for i := 0; i < ABL_Nstep; i++ {{
+  x_i := ABL_x0 + (i+1)*ABL_c
+  y_i := ABL_y0 + (i+1)*ABL_c
+  // rectangular slices
+  border_i := Rect(x_i*2,y_i*2).Sub(Rect( (x_i-ABL_c)*2, (y_i-ABL_c)*2 ))
+  // alpha = a*(x-x0)**2
+  alpha_i := ABL_coeff*Pow(x_i - ABL_x0, ABL_pow)
+  region_i := ABL_region_index_start + i
+  DefRegion(region_i, border_i)
+  alpha.setregion(region_i, alpha_i)
+}}
+
 //save starting conditions
 save(regions)
 save(Msat)
@@ -66,7 +92,7 @@ m = uniform(1,0,0)
 
 // Remove surface charges from left (mx=+1) and right (mx=+1) sides.
 // Do this before running relax().
-BoundaryRegion := 0
+BoundaryRegion := ABL_region_index_start + ABL_Nstep - 1
 MagLeft        := 1
 MagRight       := 1
 ext_rmSurfaceCharge(BoundaryRegion, MagLeft, MagRight)
@@ -107,32 +133,6 @@ points    := 20
 // time step, recall f_Nyquist = 1/(2 dt)
 tstep     := 420e-12
 simtime   := tstep * points
-
-// absorbing boundary layers.
-ABL_alpha1 := alpha //alpha at start of ABL
-ABL_alpha2 := 1.0 //alpha at stop of ABL
-ABL_c := c // Cellsize along x and y
-ABL_pow := 2 // polynomial order
-ABL_Nstep := 40 // steps to use on edge, usually 200 nm
-ABL_range := ABL_N * ABL_c
-ABL_coeff := (ABL_alpha2 - ABL_alpha1)/(Pow((ABL_range, ABL_pow)) // Polynomial coefficient
-ABL_region_index_start := 1 // change as needed
-ABL_xmax := (Nx/2) * ABL_c
-ABL_ymax := (Ny/2) * ABL_c
-ABL_x0 := ABL_xmax - (ABL_c * ABL_Nstep)
-ABL_y0 := ABL_ymax - (ABL_c * ABL_Nstep)
-// Set the damping with nesting rectangular borders.
-for i := 0; i < ABL_Nstep; i++ {
-  xi := ABL_x0 + i*ABL_c
-  yi := ABL_y0 + i*ABL_c
-  // rectangular slices
-  border_i := Rect(xi*2,yi*2).Sub(Rect( (xi-ABL_c)*2, (yi-ABL_c)*2 ))
-  // alpha = a*(x-x0)**2
-  alpha_i := ABL_coeff*Pow(this_x - ABL_x0, ABL_pow)
-  region_i := ABL_region_index_start + i
-  DefRegion(region_i, border_i)
-  alpha.setregion(region_i, alpha_i)
-}
 
 //save m_full as .ovf
 autosave(m_full, tstep)
